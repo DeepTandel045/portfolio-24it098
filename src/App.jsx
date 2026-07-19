@@ -1,34 +1,45 @@
-import Header from "./components/Header";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Footer from "./components/Footer";
-import Projects from "./components/Projects";
+import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import NavBar from './components/navbar.jsx'
+import Home from './components/home.jsx'
+import Projects from './components/projects.jsx'
+import Contact from './components/contact.jsx'
+import NotFound from './components/notfound.jsx'
+import Footer from './components/footer.jsx'
 
+const skills = ['React', 'Java', 'Python', 'SQL']
 
 function App() {
-  const skills = [
-    "React",
-    "Java",
-    "Python",
-    "SQL"
-];
-     return (
-    <>
-      <Header
-        name="Deep Tandel"
-        color="blue"
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('theme-dark', darkMode)
+
+    return () => {
+      document.documentElement.classList.remove('theme-dark')
+    }
+  }, [darkMode])
+
+  return (
+    <div className="app-shell">
+      <NavBar
+        darkMode={darkMode}
+        onToggleTheme={() => setDarkMode((current) => !current)}
       />
 
-      <About />
+      <main className="page-frame">
+        <Routes>
+          <Route path="/" element={<Home skills={skills} />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
-      <Skills skillList={skills} />
-       <Projects />
       <Footer />
-    </>
-  );
-
-
-
+    </div>
+  )
 }
 
-export default App;
+export default App
