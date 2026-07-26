@@ -15,18 +15,18 @@ function Home({ skills }) {
         </p>
       </div>
 
-      <div className="content-grid">
-        <article className="panel">
+      <div className="home-grid">
+        <article className="panel home-panel">
           <About />
         </article>
 
-        <article className="panel">
+        <article className="panel home-panel">
           <Skills skillList={skills} />
         </article>
+      </div>
 
-        <article className="panel">
-          <Projects />
-        </article>
+      <div className="home-projects-row">
+        <Projects />
       </div>
     </section>
   )

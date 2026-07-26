@@ -162,6 +162,160 @@ a {
   flex: 1;
 }
 
+.projects-page {
+  display: grid;
+  gap: 20px;
+}
+
+.projects-hero {
+  display: grid;
+  gap: 10px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.projects-hero h1 {
+  margin: 0;
+  color: var(--primary);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.projects-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface-soft);
+}
+
+.search-field {
+  display: grid;
+  gap: 8px;
+  flex: 1 1 320px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.search-field span {
+  color: var(--text);
+}
+
+.search-field input {
+  width: 100%;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  background: var(--surface-strong);
+}
+
+.search-field input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.repo-card,
+.status-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.repo-card {
+  padding: 22px;
+  display: grid;
+  gap: 14px;
+}
+
+.repo-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.repo-card-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.repo-stars {
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--primary-contrast);
+  background: var(--primary);
+  font-weight: 700;
+}
+
+.repo-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.repo-link {
+  justify-self: start;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.repo-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.status-card {
+  padding: 28px;
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.status-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.error-state {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 4px solid var(--border);
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .page {
   display: grid;
   gap: 20px;
@@ -207,10 +361,21 @@ a {
   line-height: 1.65;
 }
 
-.content-grid {
+.home-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+}
+
+.home-projects-row {
+  display: grid;
+  gap: 20px;
+  margin-top: 72px;
+  padding-top: 8px;
+}
+
+.home-panel {
+  min-height: 100%;
 }
 
 .panel {
@@ -328,7 +493,11 @@ code {
     text-align: center;
   }
 
-  .content-grid {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .repo-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -343,8 +512,20 @@ code {
   .hero-card,
   .panel,
   .error-card,
-  .contact-card {
+  .contact-card,
+  .projects-hero,
+  .projects-toolbar,
+  .repo-card,
+  .status-card {
     padding: 20px;
+  }
+
+  .projects-toolbar {
+    align-items: stretch;
+  }
+
+  .search-field {
+    flex-basis: 100%;
   }
 
   .contact-actions {
