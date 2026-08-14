@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
+
 import NavBar from './components/navbar.jsx'
 import Home from './components/home.jsx'
 import Projects from './components/projects.jsx'
 import Contact from './components/contact.jsx'
+import Tasks from './components/tasks.jsx'
 import NotFound from './components/notfound.jsx'
 import Footer from './components/footer.jsx'
 
@@ -32,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home skills={skills} />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/tasks" element={<Tasks />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
