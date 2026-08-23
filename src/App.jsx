@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 
+import Login from "./components/login.jsx";
+import Register from "./components/register.jsx";
+import ProtectedRoute from "./components/protectedRoute.jsx";
 import NavBar from './components/navbar.jsx'
 import Home from './components/home.jsx'
 import Projects from './components/projects.jsx'
@@ -34,8 +37,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home skills={skills} />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />   
+<Route
+    path="/tasks"
+    element={
+        <ProtectedRoute>
+            <Tasks />
+        </ProtectedRoute>
+    }
+/>          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
