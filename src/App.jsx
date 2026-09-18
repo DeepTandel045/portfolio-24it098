@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 
@@ -7,9 +7,9 @@ import Register from "./components/register.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
 import NavBar from './components/navbar.jsx'
 import Home from './components/home.jsx'
-import Projects from './components/projects.jsx'
-import Contact from './components/contact.jsx'
-import Tasks from './components/tasks.jsx'
+const Projects = lazy(() => import('./components/projects.jsx'))
+const Contact = lazy(() => import('./components/contact.jsx'))
+const Tasks = lazy(() => import('./components/tasks.jsx'))
 import NotFound from './components/notfound.jsx'
 import Footer from './components/footer.jsx'
 
@@ -34,6 +34,7 @@ function App() {
       />
 
       <main className="page-frame">
+          <Suspense fallback={<div className="loading-page">Loading page...</div>}>
         <Routes>
           <Route path="/" element={<Home skills={skills} />} />
           <Route path="/projects" element={<Projects />} />
@@ -49,6 +50,7 @@ function App() {
 />          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+          </Suspense>
       </main>
 
       <Footer />
