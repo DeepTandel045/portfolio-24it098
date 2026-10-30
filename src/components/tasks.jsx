@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     getTasks,
     createTask,
@@ -7,6 +8,13 @@ import {
 } from "../api";
 
 function Tasks() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     // -----------------------------
     // State
     // -----------------------------
@@ -244,12 +252,22 @@ function Tasks() {
     return (
         <section className="tasks-page">
 
-            <h1>Task Manager</h1>
-
-            <p>
-                Manage your tasks using the React,
-                Express and MongoDB backend.
-            </p>
+            <div className="tasks-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div>
+                    <h1 style={{ margin: 0 }}>Task Manager</h1>
+                    <p style={{ margin: '0.25rem 0 0 0' }}>
+                        Manage your tasks using the React, Express and MongoDB backend.
+                    </p>
+                </div>
+                <button
+                    className="secondary-button logout-btn"
+                    type="button"
+                    onClick={handleLogout}
+                    style={{ padding: '8px 16px', cursor: 'pointer' }}
+                >
+                    Logout
+                </button>
+            </div>
 
             {/* Toast Notification */}
             {toast && (
