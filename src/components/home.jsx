@@ -9,7 +9,6 @@ function Home({ skills }) {
     { value: '5th', label: 'Semester IT' },
     { value: '24IT098', label: 'Student Roll No' },
     { value: 'MERN', label: 'Primary Stack' },
-    { value: 'AWD', label: 'Coursework Lab' },
   ]
 
   return (
