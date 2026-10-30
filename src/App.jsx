@@ -7,13 +7,25 @@ import Register from "./components/register.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
 import NavBar from './components/navbar.jsx'
 import Home from './components/home.jsx'
-const Projects = lazy(() => import('./components/projects.jsx'))
+import Projects from './components/projects.jsx'
 const Contact = lazy(() => import('./components/contact.jsx'))
 const Tasks = lazy(() => import('./components/tasks.jsx'))
 import NotFound from './components/notfound.jsx'
 import Footer from './components/footer.jsx'
 
-const skills = ['React', 'Java', 'Python', 'SQL']
+const skills = [
+  'React 19',
+  'Node.js',
+  'Express.js',
+  'MongoDB',
+  'JavaScript (ES6+)',
+  'REST APIs',
+  'JWT Auth',
+  'Java',
+  'Python',
+  'SQL',
+  'Git & GitHub',
+]
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
