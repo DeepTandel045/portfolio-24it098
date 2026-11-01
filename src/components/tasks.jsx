@@ -336,7 +336,33 @@ function Tasks() {
             >
 
                 <div className="form-group">
-                    <label>Title</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                        <label style={{ margin: 0, fontWeight: 'bold' }}>Title</label>
+                        <button
+                            type="button"
+                            className="ai-btn"
+                            onClick={handleGenerateAI}
+                            disabled={aiLoading || !title.trim()}
+                            title={title.trim() ? "Click to generate description using AI" : "Enter a title first"}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                background: aiLoading || !title.trim() ? '#94a3b8' : 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontSize: '0.88rem',
+                                fontWeight: '600',
+                                cursor: aiLoading || !title.trim() ? 'not-allowed' : 'pointer',
+                                boxShadow: aiLoading || !title.trim() ? 'none' : '0 4px 12px rgba(124, 58, 237, 0.35)',
+                                transition: 'all 0.2s ease',
+                            }}
+                        >
+                            {aiLoading ? "⏳ Generating AI..." : "✨ Auto-Generate (AI)"}
+                        </button>
+                    </div>
 
                     <input
                         type="text"
@@ -344,12 +370,51 @@ function Tasks() {
                         onChange={(e) =>
                             setTitle(e.target.value)
                         }
-                        placeholder="Enter task title"
+                        placeholder="Enter task title (e.g. Fix authentication bug, Deploy backend to Docker)"
                     />
+
+                    {/* AI Prompt Pop-up Helper when Title is entered */}
+                    {title.trim().length >= 3 && !description && (
+                        <div
+                            style={{
+                                marginTop: '6px',
+                                padding: '8px 12px',
+                                background: 'linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%)',
+                                border: '1px solid #bae6fd',
+                                borderRadius: '6px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                fontSize: '0.85rem',
+                                color: '#0369a1',
+                            }}
+                        >
+                            <span>💡 <strong>AI Tip:</strong> Click <strong>"Auto-Generate (AI)"</strong> to instantly craft a description and priority!</span>
+                            <button
+                                type="button"
+                                onClick={handleGenerateAI}
+                                disabled={aiLoading}
+                                style={{
+                                    background: '#0284c7',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    padding: '4px 10px',
+                                    fontSize: '0.78rem',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    marginLeft: '8px',
+                                    whiteSpace: 'nowrap'
+                                }}
+                            >
+                                Generate Now
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <div className="form-group">
-                    <label>Description</label>
+                    <label style={{ fontWeight: 'bold' }}>Description (AI Editable)</label>
 
                     <input
                         type="text"
@@ -357,8 +422,33 @@ function Tasks() {
                         onChange={(e) =>
                             setDescription(e.target.value)
                         }
-                        placeholder="Enter task description"
+                        placeholder="Enter task description or use Auto-Generate (AI)"
                     />
+
+                    {/* AI Generated Status Notice & Responsible AI Disclaimer */}
+                    {aiNotice && (
+                        <div
+                            style={{
+                                marginTop: '8px',
+                                padding: '10px 14px',
+                                borderRadius: '8px',
+                                fontSize: '0.85rem',
+                                lineHeight: '1.45',
+                                backgroundColor: isAiFallback ? '#fffbeb' : '#f5f3ff',
+                                color: isAiFallback ? '#92400e' : '#5b21b6',
+                                border: isAiFallback ? '1px solid #fcd34d' : '1px solid #c4b5fd',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold' }}>
+                                <span>{isAiFallback ? "⚠️ Notice:" : "✨ AI Suggestion Applied:"}</span>
+                                <span>{aiNotice}</span>
+                            </div>
+                            <div style={{ marginTop: '4px', fontSize: '0.8rem', opacity: 0.9 }}>
+                                <strong>Responsible AI Disclaimer:</strong> Content was generated by AI. You can freely edit or refine this description before saving to ensure accuracy.
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="form-group">
