@@ -360,21 +360,23 @@ function Tasks() {
                                 transition: 'all 0.2s ease',
                             }}
                         >
-                            {aiLoading ? "⏳ Generating AI..." : "✨ Auto-Generate (AI)"}
+                            {aiLoading ? "⏳ Generating..." : description ? "✨ Re-Generate (AI)" : "✨ Auto-Generate (AI)"}
                         </button>
                     </div>
 
                     <input
                         type="text"
                         value={title}
-                        onChange={(e) =>
-                            setTitle(e.target.value)
-                        }
-                        placeholder="Enter task title (e.g. Fix authentication bug, Deploy backend to Docker)"
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setAiNotice("");
+                            setIsAiFallback(false);
+                        }}
+                        placeholder="Enter task title (e.g. Study React, Fix bug, Buy groceries, Deploy app)"
                     />
 
-                    {/* AI Prompt Pop-up Helper when Title is entered */}
-                    {title.trim().length >= 3 && !description && (
+                    {/* AI Prompt Pop-up Helper: Always appears whenever title has >= 2 characters */}
+                    {title.trim().length >= 2 && (
                         <div
                             style={{
                                 marginTop: '6px',
@@ -389,7 +391,7 @@ function Tasks() {
                                 color: '#0369a1',
                             }}
                         >
-                            <span>💡 <strong>AI Tip:</strong> Click <strong>"Auto-Generate (AI)"</strong> to instantly craft a description and priority!</span>
+                            <span>💡 <strong>AI Assistant:</strong> Ready to craft description & priority for <em>"{title.trim().length > 25 ? title.trim().slice(0, 25) + '...' : title.trim()}"</em></span>
                             <button
                                 type="button"
                                 onClick={handleGenerateAI}
@@ -399,15 +401,15 @@ function Tasks() {
                                     color: 'white',
                                     border: 'none',
                                     borderRadius: '4px',
-                                    padding: '4px 10px',
-                                    fontSize: '0.78rem',
+                                    padding: '5px 12px',
+                                    fontSize: '0.8rem',
                                     fontWeight: '600',
                                     cursor: 'pointer',
                                     marginLeft: '8px',
                                     whiteSpace: 'nowrap'
                                 }}
                             >
-                                Generate Now
+                                {description ? "Re-Generate" : "Generate Description"}
                             </button>
                         </div>
                     )}
@@ -419,13 +421,13 @@ function Tasks() {
                     <input
                         type="text"
                         value={description}
-                        onChange={(e) =>
-                            setDescription(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setDescription(e.target.value);
+                        }}
                         placeholder="Enter task description or use Auto-Generate (AI)"
                     />
 
-                    {/* AI Generated Status Notice & Responsible AI Disclaimer */}
+                    {/* AI Generated Status Notice & Responsible AI Disclaimer (Dismissible) */}
                     {aiNotice && (
                         <div
                             style={{
@@ -438,9 +440,28 @@ function Tasks() {
                                 color: isAiFallback ? '#92400e' : '#5b21b6',
                                 border: isAiFallback ? '1px solid #fcd34d' : '1px solid #c4b5fd',
                                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                                position: 'relative',
                             }}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold' }}>
+                            <button
+                                type="button"
+                                onClick={() => setAiNotice("")}
+                                title="Dismiss notice"
+                                style={{
+                                    position: 'absolute',
+                                    top: '6px',
+                                    right: '8px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem',
+                                    color: 'inherit',
+                                    opacity: 0.7,
+                                }}
+                            >
+                                ✕
+                            </button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', paddingRight: '20px' }}>
                                 <span>{isAiFallback ? "⚠️ Notice:" : "✨ AI Suggestion Applied:"}</span>
                                 <span>{aiNotice}</span>
                             </div>
