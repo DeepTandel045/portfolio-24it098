@@ -5,6 +5,7 @@ import {
     createTask,
     updateTask,
     deleteTask,
+    generateTaskDescription,
 } from "../api";
 
 function Tasks() {
@@ -33,6 +34,11 @@ function Tasks() {
 
     const [error, setError] = useState("");
     const [toast, setToast] = useState("");
+
+    // Practical 13 - AI State
+    const [aiLoading, setAiLoading] = useState(false);
+    const [aiNotice, setAiNotice] = useState("");
+    const [isAiFallback, setIsAiFallback] = useState(false);
 
     // -----------------------------
     // GET - Load Tasks
@@ -223,6 +229,42 @@ function Tasks() {
             setError(err.message);
         } finally {
             setDeleting(false);
+        }
+    };
+
+        // -----------------------------
+    // AI Generate Description - Practical 13
+    // -----------------------------
+    const handleGenerateAI = async () => {
+        if (!title.trim()) {
+            setError("Please enter a task title first so AI can generate a relevant description.");
+            return;
+        }
+
+        try {
+            setAiLoading(true);
+            setError("");
+            setAiNotice("");
+
+            const data = await generateTaskDescription(title.trim());
+
+            if (data && data.description) {
+                setDescription(data.description);
+                if (data.suggestedPriority) {
+                    setPriority(data.suggestedPriority);
+                }
+                setIsAiFallback(Boolean(data.fallback));
+                setAiNotice(
+                    data.fallback
+                        ? "Fallback suggestion applied (AI API offline or key unconfigured)."
+                        : "AI description generated successfully!"
+                );
+                showToast("AI suggestion applied to task form!");
+            }
+        } catch (err) {
+            setError(`AI Service Notice: ${err.message}`);
+        } finally {
+            setAiLoading(false);
         }
     };
 

@@ -193,3 +193,33 @@ export const deleteTask = async (id) => {
 
     return data;
 };
+
+
+// ==============================
+// AI GENERATE DESCRIPTION - PRACTICAL 13
+// ==============================
+
+export const generateTaskDescription = async (title) => {
+    const response = await fetch(`${BASE_URL}/api/ai/generate-description`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ title }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 401) {
+        localStorage.removeItem("token");
+        throw new Error("Session expired. Please login again.");
+    }
+
+    if (response.status === 429) {
+        throw new Error(data.message || "Rate limit reached. Please wait a moment.");
+    }
+
+    if (!response.ok) {
+        throw new Error(data.message || "Failed to generate AI description");
+    }
+
+    return data;
+};
